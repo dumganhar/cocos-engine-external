@@ -35,6 +35,10 @@ set(CC_EXTERNAL_SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/tommyds/tommy.h
 )
 
+if(USE_SE_QUICKJS)
+  include(${CMAKE_CURRENT_LIST_DIR}/quickjs/CMakeLists.txt)
+endif()
+
 if(NOT USE_MODULES)
   list(APPEND CC_EXTERNAL_SOURCES
     ${CC_UNZIP_SOURCES}

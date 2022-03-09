@@ -84,8 +84,7 @@ if(CC_EDITOR)
   message(STATUS "CC_EDITOR USE V8 FROM NODEJS")
 elseif(USE_SE_V8)
   list(APPEND se_libs_name
-  v8_monolith
-  uv
+    v8_monolith
   )
   if(USE_V8_DEBUGGER)
   list(APPEND se_libs_name inspector)
@@ -192,6 +191,7 @@ list(APPEND CC_EXTERNAL_LIBS
     curl
     crypto
     ssl
+    uv
     ${glslang_libs_name}
     ${spirv-cross_libs_name}
     ${tbb_libs_name}

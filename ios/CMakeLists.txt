@@ -86,7 +86,6 @@ set(se_libs_name)
 if(USE_SE_V8)
     list(APPEND se_libs_name
         v8_monolith
-        uv
         )
 #    if(USE_V8_DEBUGGER)
 #        list(APPEND se_libs_name)
@@ -196,6 +195,7 @@ list(APPEND CC_EXTERNAL_LIBS
     webp
     crypto
     ssl
+    uv
     ${glslang_libs_name}
     ${spirv-cross_libs_name}
     ${tbb_libs_name}
