@@ -79,12 +79,12 @@ if(USE_SE_V8)
       )
     endif()
 
-    add_library(v8_inspector STATIC IMPORTED GLOBAL)
-    set_target_properties(v8_inspector PROPERTIES
-      IMPORTED_LOCATION ${platform_spec_path}/v8/libinspector.a
-      INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/v8
-    )
-    set(se_libs_name v8_monolith v8_inspector)
+    # add_library(v8_inspector STATIC IMPORTED GLOBAL)
+    # set_target_properties(v8_inspector PROPERTIES
+    #   IMPORTED_LOCATION ${platform_spec_path}/v8/libinspector.a
+    #   INTERFACE_INCLUDE_DIRECTORIES ${platform_spec_path}/include/v8
+    # )
+    set(se_libs_name v8_monolith)
 endif()
 
 if(USE_WEBSOCKET_SERVER)
@@ -95,11 +95,11 @@ if(USE_WEBSOCKET_SERVER)
     )
 endif()
 
-if(USE_SE_V8 AND USE_V8_DEBUGGER )
-    list(APPEND CC_EXTERNAL_LIBS
-        v8_inspector
-    )
-endif()
+# if(USE_SE_V8 AND USE_V8_DEBUGGER )
+#     list(APPEND CC_EXTERNAL_LIBS
+#         v8_inspector
+#     )
+# endif()
 
 ############################# glslang #############################
 set(glslang_libs_name glslang glslang-default-resource-limits MachineIndependent OGLCompiler OSDependent SPIRV SPIRV-Tools-opt SPIRV-Tools GenericCodeGen)
