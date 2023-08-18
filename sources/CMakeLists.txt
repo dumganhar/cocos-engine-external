@@ -24,6 +24,49 @@ set(CC_UTILS_SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/xxtea/xxtea.h
 )
 
+set(CC_OPENAL_APPLE_SOURCES
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAAudioUnitOutputCapturer.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CABufferList.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CABufferList.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CADebugMacros.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CADebugMacros.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAGuard.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAGuard.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAHostTimeBase.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAHostTimeBase.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAMath.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAMutex.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAMutex.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAStreamBasicDescription.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAStreamBasicDescription.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility/CAThreadSafeList.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/MacOSX_OALExtensions.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/al/OpenAL.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/al/al.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/al/alc.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/al/alctypes.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/al/altypes.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/al/alut.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalBuffer.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalBuffer.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalCaptureDevice.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalCaptureDevice.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalCaptureMixer.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalCaptureMixer.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalContext.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalContext.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalDevice.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalDevice.mm
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalImp.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalImp.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalOSX.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalOSX.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalRingBuffer.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalRingBuffer.h
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalSource.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/openal-apple/oalSource.h
+)
+
 set(CC_EXTERNAL_SOURCES
 
   ${CMAKE_CURRENT_LIST_DIR}/tommyds/tommy.c
@@ -87,6 +130,15 @@ elseif(APPLE)
   if(USE_SOCKET)
       include(${CMAKE_CURRENT_LIST_DIR}/SocketRocket/CMakeLists.txt)
   endif()
+
+  list(APPEND CC_EXTERNAL_SOURCES
+    ${CC_OPENAL_APPLE_SOURCES}
+  )
+
+  include_directories(${CMAKE_CURRENT_LIST_DIR}/openal-apple)
+  include_directories(${CMAKE_CURRENT_LIST_DIR}/openal-apple/al)
+  include_directories(${CMAKE_CURRENT_LIST_DIR}/openal-apple/CoreAudioUtilityClasses/CoreAudio/PublicUtility)
+
 elseif(NX_WINDOWS)
   include(${CMAKE_CURRENT_LIST_DIR}/pvmp3dec/CMakeLists.txt)
   list(APPEND CC_EXTERNAL_LIBS
