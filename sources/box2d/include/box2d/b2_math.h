@@ -123,7 +123,8 @@ struct b2Vec2
 		return b2Vec2(-y, x);
 	}
 
-	float x, y;
+    float x{0.0f};
+    float y{0.0f};
 };
 
 /// A 2D column vector with 3 elements.
@@ -162,7 +163,9 @@ struct b2Vec3
 		x *= s; y *= s; z *= s;
 	}
 
-	float x, y, z;
+    float x{0.0f};
+    float y{0.0f};
+    float z{0.0f};
 };
 
 /// A 2-by-2 matrix. Stored in column-major order.
@@ -236,7 +239,8 @@ struct b2Mat22
 		return x;
 	}
 
-	b2Vec2 ex, ey;
+    b2Vec2 ex{1.0f, 0.0f};
+    b2Vec2 ey{0.0f, 1.0f};
 };
 
 /// A 3-by-3 matrix. Stored in column-major order.
@@ -278,7 +282,9 @@ struct b2Mat33
 	/// Returns the zero matrix if singular.
 	void GetSymInverse33(b2Mat33* M) const;
 
-	b2Vec3 ex, ey, ez;
+    b2Vec3 ex{1.0f, 0.0f, 0.0f};
+    b2Vec3 ey{0.0f, 1.0f, 0.0f};
+    b2Vec3 ez{0.0f, 0.0f, 1.0f};
 };
 
 /// Rotation
@@ -328,7 +334,8 @@ struct b2Rot
 	}
 
 	/// Sine and cosine
-	float s, c;
+    float s{0.0f};
+    float c{1.0f};
 };
 
 /// A transform contains translation and rotation. It is used to represent
@@ -379,11 +386,12 @@ struct b2Sweep
 
 	b2Vec2 localCenter;	///< local center of mass position
 	b2Vec2 c0, c;		///< center world positions
-	float a0, a;		///< world angles
+    float a0{0.0f};
+    float a{0.0f};		///< world angles
 
 	/// Fraction of the current time step in the range [0,1]
 	/// c0 and a0 are the positions at alpha0.
-	float alpha0;
+    float alpha0{0.0f};
 };
 
 /// Useful constant
