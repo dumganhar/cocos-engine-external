@@ -1104,6 +1104,56 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 	}
 }
 
+void b2World::DrawJoint(b2Joint* joint)
+{
+	b2Body* bodyA = joint->GetBodyA();
+	b2Body* bodyB = joint->GetBodyB();
+	const b2Transform& xf1 = bodyA->GetTransform();
+	const b2Transform& xf2 = bodyB->GetTransform();
+	b2Vec2 x1 = xf1.p;
+	b2Vec2 x2 = xf2.p;
+	b2Vec2 p1 = joint->GetAnchorA();
+	b2Vec2 p2 = joint->GetAnchorB();
+
+	b2Color color(0.5f, 0.8f, 0.8f);
+
+	switch (joint->GetType())
+	{
+	case e_distanceJoint:
+		m_debugDraw->DrawSegment(p1, p2, color);
+		break;
+
+	case e_pulleyJoint:
+	{
+		b2PulleyJoint* pulley = (b2PulleyJoint*)joint;
+		b2Vec2 s1 = pulley->GetGroundAnchorA();
+		b2Vec2 s2 = pulley->GetGroundAnchorB();
+		m_debugDraw->DrawSegment(s1, p1, color);
+		m_debugDraw->DrawSegment(s2, p2, color);
+		m_debugDraw->DrawSegment(s1, s2, color);
+	}
+	break;
+
+	case e_mouseJoint:
+	{
+		b2Color c;
+		c.Set(0.0f, 1.0f, 0.0f);
+		m_debugDraw->DrawPoint(p1, 4.0f, c);
+		m_debugDraw->DrawPoint(p2, 4.0f, c);
+
+		c.Set(0.8f, 0.8f, 0.8f);
+		m_debugDraw->DrawSegment(p1, p2, c);
+
+	}
+	break;
+
+	default:
+		m_debugDraw->DrawSegment(x1, p1, color);
+		m_debugDraw->DrawSegment(p1, p2, color);
+		m_debugDraw->DrawSegment(x2, p2, color);
+	}
+}
+
 void b2World::DebugDraw()
 {
 	if (m_debugDraw == nullptr)
@@ -1153,7 +1203,7 @@ void b2World::DebugDraw()
 	{
 		for (b2Joint* j = m_jointList; j; j = j->GetNext())
 		{
-			j->Draw(m_debugDraw);
+			DrawJoint(j);
 		}
 	}
 
@@ -1264,14 +1314,11 @@ void b2World::Dump()
 		return;
 	}
 
-	b2OpenDump("box2d_dump.inl");
+	b2Log("b2Vec2 g(%.15lef, %.15lef);\n", m_gravity.x, m_gravity.y);
+	b2Log("m_world->SetGravity(g);\n");
 
-	b2Dump("b2Vec2 g(%.9g, %.9g);\n", m_gravity.x, m_gravity.y);
-	b2Dump("m_world->SetGravity(g);\n");
-
-	b2Dump("b2Body** bodies = (b2Body**)b2Alloc(%d * sizeof(b2Body*));\n", m_bodyCount);
-	b2Dump("b2Joint** joints = (b2Joint**)b2Alloc(%d * sizeof(b2Joint*));\n", m_jointCount);
-
+	b2Log("b2Body** bodies = (b2Body**)b2Alloc(%d * sizeof(b2Body*));\n", m_bodyCount);
+	b2Log("b2Joint** joints = (b2Joint**)b2Alloc(%d * sizeof(b2Joint*));\n", m_jointCount);
 	int32 i = 0;
 	for (b2Body* b = m_bodyList; b; b = b->m_next)
 	{
@@ -1295,9 +1342,9 @@ void b2World::Dump()
 			continue;
 		}
 
-		b2Dump("{\n");
+		b2Log("{\n");
 		j->Dump();
-		b2Dump("}\n");
+		b2Log("}\n");
 	}
 
 	// Second pass on joints, only gear joints.
@@ -1308,15 +1355,13 @@ void b2World::Dump()
 			continue;
 		}
 
-		b2Dump("{\n");
+		b2Log("{\n");
 		j->Dump();
-		b2Dump("}\n");
+		b2Log("}\n");
 	}
 
-	b2Dump("b2Free(joints);\n");
-	b2Dump("b2Free(bodies);\n");
-	b2Dump("joints = nullptr;\n");
-	b2Dump("bodies = nullptr;\n");
-
-	b2CloseDump();
+	b2Log("b2Free(joints);\n");
+	b2Log("b2Free(bodies);\n");
+	b2Log("joints = nullptr;\n");
+	b2Log("bodies = nullptr;\n");
 }

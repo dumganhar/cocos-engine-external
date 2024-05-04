@@ -1,7 +1,7 @@
 ![Box2D Logo](https://box2d.org/images/logo.svg)
 
 # Build Status
-[![Build Status](https://github.com/erincatto/box2d/actions/workflows/build.yml/badge.svg)](https://github.com/erincatto/box2d/actions)
+[![Build Status](https://travis-ci.org/erincatto/box2d.svg?branch=master)](https://travis-ci.org/erincatto/box2d)
 
 # Box2D 
 
@@ -78,24 +78,6 @@ Note: vcpkg support is not provided by the Box2D project
 - Select the testbed scheme
 - Edit the scheme to set a custom working directory, make this be in box2d/testbed
 - You can now build and run the testbed
-
-## Installing using CMake
-You can build and install the library and docs using this command sequence (requires Doxygen):
-```
-mkdir build
-cd build
-cmake -DBOX2D_BUILD_DOCS=ON ..
-cmake --build .
-cmake --build . --target INSTALL
-```
-On Windows this tries to install in `Program Files` and thus requires admin privileges. Alternatively you can target another directory using something like this:
-```
-mkdir build
-cd build
-cmake -DBOX2D_BUILD_DOCS=ON -DCMAKE_INSTALL_PREFIX="C:/packages" ..
-cmake --build .
-cmake --build . --target INSTALL
-```
 
 ## Documentation
 - [Manual](https://box2d.org/documentation/)
